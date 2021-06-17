@@ -47,7 +47,7 @@ router.post('/user/signin', async(req, res) => {
 
 
 router.get('/', requireToken, (req, res) => {
-    res.send("Your email is " + req.user.email)
+    res.send({ email: req.user.email })
 })
 
 

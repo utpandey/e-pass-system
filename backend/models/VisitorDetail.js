@@ -1,32 +1,50 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt')
-const Validator = require('../middlewares/Validators');
-// const ePassSchema = require('./EPass');
 
-const userSchema = new mongoose.Schema({
+const visitorDetailSchema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        required: true
+    },
+    lastName: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         unique: true,
-        lowercase: true,
-        required: [true, 'Password is required!'],
-        validate: Validator.emailValidator
+        required: true
     },
-    password: {
+    purpose: {
         type: String,
-        required: [true, 'Password is required!'],
-        validate: Validator.passwordValidator
+        required: true
     },
-    role: {
+    vaccinated: {
+        type: Boolean,
+        required: true,
+    },
+    gender: {
         type: String,
-        enum: ['employee', 'admin', 'hr', 'receptionist'],
-        default: 'employee'
+        required: true
     },
-    // role: { type: [{ type: String, enum: ['admin', 'hr', 'receptionist', 'employee'] }], default: ['employee'] },
-    // epassIds: [ePassSchema]
-    epassIds: [mongoose.Schema.Types.ObjectId]
+    address: {
+        type: String,
+        required: true
+    },
+    inTime: {
+        type: String,
+        required: true
+    },
+    outTime: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: Number,
+        required: true
+    }
 })
 
-userSchema.pre('save', function(next) {
+visitorDetailSchema.pre('save', function(next) {
     const user = this;
     if (!user.isModified('password')) {
         return next()
@@ -45,7 +63,7 @@ userSchema.pre('save', function(next) {
     })
 })
 
-userSchema.methods.comparePassword = function(candidatePassword) {
+visitorDetailSchema.methods.comparePassword = function(candidatePassword) {
     const user = this;
     return new Promise((resolve, reject) => {
         bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {
@@ -60,6 +78,4 @@ userSchema.methods.comparePassword = function(candidatePassword) {
     })
 }
 
-mongoose.model('User', userSchema);
-
-module.exports = userSchema;
+mongoose.model('VisitorDetail', visitorDetailSchema);

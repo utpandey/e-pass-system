@@ -23,12 +23,8 @@ const ePassSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    outTime: {
-        type: String,
-        required: true
-    },
     phone: {
-        type: Number,
+        type: String,
         required: true
     }
 

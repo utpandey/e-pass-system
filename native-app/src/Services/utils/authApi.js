@@ -7,7 +7,7 @@ import { store } from '../../Redux/store';
 import { LOGIN } from '../../Redux/reducers/authReducer';
 
 export const signIn = async({ email, password }) => {
-    console.log(email)
+    // adb -s RZ8MA2DPLTT reverse tcp:3000 tcp:3000 at the native cmd
     fetch('http://localhost:3000/user/signin', {
             method: 'POST',
             headers: {
@@ -21,9 +21,9 @@ export const signIn = async({ email, password }) => {
         .then(res => res.json())
         .then(async data => {
 
-            console.log(data.token)
-            store.dispatch(LOGIN(data.token));
-            RootNavigation.navigate('home')
+            console.log(data)
+            store.dispatch(LOGIN(data));
+            RootNavigation.navigate('mainstack')
         })
         .catch(e => {
             console.log('error ', e);

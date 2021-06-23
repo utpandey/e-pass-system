@@ -64,9 +64,10 @@ router.post('/user/signin', async(req, res) => {
             await user.comparePassword(password);
             const token = jwt.sign({ userId: user._id }, serverConfig.jwtKey);
             var role = user.role;
-            res.send({ token, role });
+            var employeeId = user._id;
+            res.send({ token, role, employeeId });
         } else {
-            res.status(401).send('Please sign in with the correct credentials!');
+            res.status(401).send('Please sign in with correct credentials!');
         }
     } catch (err) {
         console.log(err);

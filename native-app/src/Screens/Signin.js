@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import {signIn} from '../Services/utils/api';
+import {signIn} from '../Services/utils/authApi';
 
 const Signin = props => {
   const [email, setEmail] = useState('');

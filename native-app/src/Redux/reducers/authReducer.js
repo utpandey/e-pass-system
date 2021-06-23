@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as RootNavigation from '../../Navigation/RootNavigation';
-
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        user: null,
+        user: {
+            id: null,
+            token: null,
+            role: null
+        },
         isAuthenticated: false,
         isDrawerOpen: false,
         loading: false,
@@ -13,18 +16,21 @@ const authSlice = createSlice({
     },
     reducers: {
         LOGIN: (state, action) => {
-            const id = action.payload;
-            // state.isAuthenticated = true;
-            state.user = id;
-            // state.isDrawerOpen = false;
-            console.log('state from LOGIN')
-            console.log(state)
+            const { token, employeeId, role } = action.payload;
+            state.user = {
+                id: employeeId,
+                token: token,
+                role: role
+            }
         },
         LOGOUT: (state) => {
-            // state.isAuthenticated = false;
-            RootNavigation.navigate('signin')
-            state.user = null;
-            // state.isDrawerOpen = false;
+            state.user = {
+                    id: null,
+                    token: null,
+                    role: null
+                }
+                // RootNavigation.navigate('signin')
+
         },
         OPENDRAWER: (state) => {
             state.isDrawerOpen = !state.isDrawerOpen;
@@ -35,4 +41,7 @@ const authSlice = createSlice({
 const { actions, reducer } = authSlice;
 
 export const { LOGIN, LOGOUT, OPENDRAWER } = authSlice.actions;
+
+export const selectUser = ({ auth }) => auth;
+
 export default reducer;

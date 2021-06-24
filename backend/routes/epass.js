@@ -6,6 +6,7 @@ const User = mongoose.model('User');
 const serverConfig = require('../config');
 const requireToken = require('../middlewares/requireToken');
 
+// creating an epass
 router.post('/employee/epass/create', async(req, res) => {
 
     const { employeeId, purpose, vaccinated, address, inTime, phone } = req.body;
@@ -27,6 +28,7 @@ router.post('/employee/epass/create', async(req, res) => {
 
 })
 
+// send epass id to respective employee
 router.post('/employee/send/epassId', async(req, res) => {
 
     const { ePassId, employeeId } = req.body;

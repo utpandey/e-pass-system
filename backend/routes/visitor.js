@@ -8,17 +8,19 @@ const requireToken = require('../middlewares/requireToken');
 
 router.post('/admin/visitors/create', async(req, res) => {
 
-    const { firstName, lastName, email, purpose, vaccinated, gender, address, inTime, outTime, phone } = req.body;
-
+    const { firstName, lastName, email, purpose, vaccinated, gender, address, inTime, phone } = req.body;
+    console.log(inTime)
     try {
-        const visitorDetail = new VisitorDetail({ firstName, lastName, email, purpose, vaccinated, gender, address, inTime, outTime, phone });
-        await visitorDetail.save(function(err, visitor) {
-            if (err) {
-                res.send(err.message)
-            }
-            var visitorId = visitor._id;
-            res.status(200).send(visitorId);
-        });
+        const visitorDetail = new VisitorDetail({ firstName, lastName, email, purpose, vaccinated, gender, address, inTime, phone });
+        await visitorDetail.save();
+        // await visitorDetail.save(function (err) {
+        //     if (err) {
+        //         res.status(401)
+        //     }
+        //     console.log(visitorDetail)
+        //     var visitorId = visitorDetail._id;
+        //     res.status(200).send(visitorDetail);
+        // });
         // res.status(200).send({ visitorId: req.visitorDetail._id });
     } catch (err) {
         res.status(422).send(err.message)
@@ -53,13 +55,14 @@ router.post('/employee/signin', async(req, res) => {
 
 router.get('/admin/visitors/all', (req, res) => {
     VisitorDetail.find({}, function(err, visitors) {
-            var visitorMap = {};
-            visitors.forEach(function(visitor) {
-                visitorMap[visitor._id] = visitor;
-            });
-            res.send(visitorMap);
-        })
-        // res.send({ email: req.employee.email })
+        var visitorMap = [];
+        visitors.forEach(function(visitors) {
+            visitorMap.push(visitors);
+            // visitorMap[visitor._id] = visitor;
+        });
+        console.log(visitorMap.length)
+        res.send(visitorMap);
+    })
 })
 
 

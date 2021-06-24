@@ -28,7 +28,7 @@ router.post('/admin/signin', async(req, res) => {
         }
     } catch (err) {
         console.log(err);
-        return res.status(422).send({ error: 'Must provide email or password' });
+        return res.send({ error: 'Must provide email or password' }).status(422);
     }
 });
 
@@ -39,8 +39,8 @@ router.post('/admin/employees/add', async(req, res) => {
     try {
         const employee = new User({ email, password });
         await employee.save();
-        const token = jwt.sign({ employeeId: employee._id }, serverConfig.jwtKey);
-        res.send({ token });
+        // const token = jwt.sign({ employeeId: employee._id }, serverConfig.jwtKey);
+        // res.send({ token });
     } catch (err) {
         res.status(422).send(err.message);
         console.log(err);
@@ -81,10 +81,12 @@ router.get('/admin/employees/all', (req, res) => {
         if (err) {
             res.send(err.message);
         }
-        var employeesMap = {};
+        var employeesMap = [];
         employees.forEach(function(employee) {
-            employeesMap[employee._id] = employee;
+            employeesMap.push(employee);
+            // employeesMap[employee._id] = employee;
         });
+        console.log(employeesMap)
         res.send(employeesMap);
     });
 });

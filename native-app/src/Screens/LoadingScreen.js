@@ -5,7 +5,7 @@ import * as RootNavigation from '../Navigation/RootNavigation';
 
 const LoadingScreen = props => {
   const fetchUser = async () => {
-    const auth = useSelector(state => state.auth);
+    // const auth = useSelector(state => state.auth);
     if (auth.user) {
       props.navigation.replace('home');
       // RootNavigation.navigate('home');
